@@ -1,24 +1,23 @@
-export function formatCurrency(amount: number, locale: string): string {
+type LocaleType = 'vi' | 'en-us';
 
-  if (locale !== 'vi' && locale !== 'en-us') {
-    return amount.toString();
-  }
+type ConfigType = { 
+  delimiter: string, 
+  unitFormatter: (currencyString: string) => string,
+};
 
-  let delimiter = '';
+const LocaleCurrencyConfig: {[key in LocaleType]: ConfigType} = {
+  'vi': {
+    delimiter: ',',
+    unitFormatter: str => `${str}đ`,
+  },
+  'en-us': {
+    delimiter: '.',
+    unitFormatter: str => `US$${str}`,
+  },
+};
 
-  if (locale === 'vi') {
-    delimiter = ',';
-  }
-  if (locale === 'en-us') {
-    delimiter = '.';
-  }
-
+export function formatCurrency(amount: number, locale: LocaleType): string {
+  const { delimiter, unitFormatter } = LocaleCurrencyConfig[locale];
   const thousands = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
-
-  if (locale === 'vi') {
-    return `${thousands}đ`;
-  }
-  if (locale === 'en-us') {
-    return `US$${thousands}`
-  }
+  return unitFormatter(thousands);
 };

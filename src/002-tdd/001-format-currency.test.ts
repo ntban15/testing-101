@@ -12,10 +12,4 @@ describe('formatCurrency', () => {
     expect(formatCurrency(50000, 'en-us')).toEqual('US$50.000');
     expect(formatCurrency(5000000, 'en-us')).toEqual('US$5.000.000');
   });
-
-  it('should not format when locale is unknown', () => {
-    expect(formatCurrency(500, 'kr')).toEqual('500');
-    expect(formatCurrency(50000, 'kr')).toEqual('50000');
-    expect(formatCurrency(5000000, 'kr')).toEqual('5000000');
-  })
 });
