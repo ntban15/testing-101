@@ -54,7 +54,11 @@ const TodoItem: FunctionComponent<Props> = ({
           onChange={onToggle}
         />
         <label onDoubleClick={() => setEditing(true)}>{todo.content}</label>
-        <button className="destroy" onClick={onDestroy} />
+        <button
+          className="destroy"
+          onClick={onDestroy}
+          data-testid="remove-button"
+        />
       </div>
       <input
         className="edit"
