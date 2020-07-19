@@ -1,22 +1,20 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
 import { ENTER_KEY } from "./const";
-
-import { todosSelector } from "./redux/selectors";
-import {
-  editTodoAction,
-  addTodoAction,
-  toggleTodoAction,
-  removeTodoAction,
-} from "./redux/actions";
 
 import TodoItem from "./components/TodoItem";
 
 function App() {
   const [input, setInput] = useState<string>("");
-  const dispatch = useDispatch();
-  const todos = useSelector(todosSelector);
+
+  // TODO: add selector
+  const todos: Todo[] = [];
+
+  // TODO: add dispatch functions
+  const handleAddTodo = (content: string) => {};
+  const handleToggleTodo = (id: string) => {};
+  const handleRemoveTodo = (id: string) => {};
+  const handleEditTodo = (id: string, content: string) => {};
 
   let main;
 
@@ -30,7 +28,7 @@ function App() {
     const inputValue = input.trim();
 
     if (inputValue) {
-      dispatch(addTodoAction(inputValue));
+      handleAddTodo(inputValue);
       setInput("");
     }
   };
@@ -44,11 +42,9 @@ function App() {
               <TodoItem
                 key={todo.id}
                 todo={todo}
-                onToggle={() => dispatch(toggleTodoAction(todo.id))}
-                onDestroy={() => dispatch(removeTodoAction(todo.id))}
-                onSave={(content: string) =>
-                  dispatch(editTodoAction(todo.id, content))
-                }
+                onToggle={() => handleToggleTodo(todo.id)}
+                onDestroy={() => handleRemoveTodo(todo.id)}
+                onSave={(content) => handleEditTodo(todo.id, content)}
               />
             );
           })}
